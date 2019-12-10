@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const mongo = require("./models/dataBase")
+mongo.connect()
 
 ///////////////rotas
 const index = require("./routes/index")
