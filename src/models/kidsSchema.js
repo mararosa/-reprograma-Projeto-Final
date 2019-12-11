@@ -4,8 +4,8 @@ const KidsSchema = new Schema({
   _id: { type: mongoose.Schema.Types.ObjectId, auto: true, required: true },
   nome: { type: String, required: true },
   idade: { type: Number, max: 16, required: true },
-  senha: { type: String, required = true },
-  login: { type: String, required = true, unique = true},
+  senha: { type: String, required: true },
+  login: { type: String, required: true, unique: true },
 })
 
 const kidsModel = mongoose.model('kids', KidsSchema);
