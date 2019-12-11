@@ -1,5 +1,8 @@
 const { connect } = require('../models/dataBase')
 const kidsModel = require('../models/KidsSchema')
+const { cofrinhoModel } = require('../models/CofrinhoSchema')
+const { gastosModel } = require('../models/GastosSchema')
+const { desejosModel } = require('../models/DesejosSchema')
 
 connect()
 
@@ -35,9 +38,23 @@ const remove = (request, response) => {
     })
 }
 
+const getById = (request, response) => {
+    const id = request.params.id
+    kidsModel.findById(id, (error, kid) => {
+        if (error) {
+            return response.status(500).send(error)
+        }
+        if (kid) {
+            return response.status(200).send(kid)
+        }
+        return response.status(404).send('Usuário não encontrodo.')
+    })
+}
+
 module.exports = {
     getAll,
     add,
     remove,
+    getById
 
 }
