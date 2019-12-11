@@ -6,6 +6,9 @@ const { desejosModel } = require('../models/DesejosSchema')
 
 connect()
 
+
+
+
 const getAll = (request, response) => {
     kidsModel.find((error, kids) => {
         if (error) {
@@ -43,7 +46,7 @@ const update = (request, response) => {
     const id = request.params.id
     const kidUpdate = request.body
     const options = { new: true }
-   kidsModel.findByIdAndUpdate(
+    kidsModel.findByIdAndUpdate(
         id,
         kidUpdate,
         options,
@@ -78,13 +81,17 @@ const updateCofrinho = async (request, response) => {
     const options = { new: true }
     const novoCofrinho = new cofrinhosModel(cofrinho)
     const kid = await kidsModel.findById(id)
-    kid.cofrinho.saldoCofrinho += request.body.valor
+    kid.saldoCofrinho += request.body.valor
+    console.log(kid.saldoCofrinho)
     kid.cofrinho.push(novoCofrinho)
-    kid.save((error) => {
+    kid.save((error, kid) => {
         if (error) {
             return response.status(500).send(error)
         }
+        if (kid) {
         return response.status(201).send(kid)
+        }
+        return response.status(404).send('Usuário não encontrado')
     })
 }
 

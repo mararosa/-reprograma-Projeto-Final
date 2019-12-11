@@ -5,7 +5,6 @@ const CofrinhosSchema = new Schema({
   data: { type: Date, required: true },
   motivo: { type: String, required: true },
   valor: { type: Number, required: true },
-  saldoCofrinho: {type: Number}
 })
 
 const cofrinhosModel = mongoose.model('cofrinhos', CofrinhosSchema);
