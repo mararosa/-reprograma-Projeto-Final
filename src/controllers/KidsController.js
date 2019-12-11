@@ -1,6 +1,6 @@
 const { connect } = require('../models/dataBase')
 const kidsModel = require('../models/KidsSchema')
-const { cofrinhoModel } = require('../models/CofrinhoSchema')
+const { cofrinhosModel } = require('../models/CofrinhosSchema')
 const { gastosModel } = require('../models/GastosSchema')
 const { desejosModel } = require('../models/DesejosSchema')
 
@@ -25,18 +25,6 @@ const add = (request, response) => {
     })
 }
 
-const remove = (request, response) => {
-    const id = request.params.id
-    kidsModel.findByIdAndDelete(id, (error, kid) => {
-        if (error) {
-            return response.status(500).send(error)
-        }
-        if (kid) {
-            return response.status(200).send('Usuário deletado!')
-        }
-        return response.status(404).send('Usuário não encontrado')
-    })
-}
 
 const getById = (request, response) => {
     const id = request.params.id
@@ -51,10 +39,60 @@ const getById = (request, response) => {
     })
 }
 
+const update = (request, response) => {
+    const id = request.params.id
+    const kidUpdate = request.body
+    const options = { new: true }
+   kidsModel.findByIdAndUpdate(
+        id,
+        kidUpdate,
+        options,
+        (error, kid) => {
+            if (error) {
+                return response.status(500).send(error)
+            }
+            if (kid) {
+                return response.status(200).send(kid)
+            }
+            return response.status(404).send('Usuário não encontrado.')
+        }
+    )
+}
+
+const remove = (request, response) => {
+    const id = request.params.id
+    kidsModel.findByIdAndDelete(id, (error, kid) => {
+        if (error) {
+            return response.status(500).send(error)
+        }
+        if (kid) {
+            return response.status(200).send('Usuário deletado!')
+        }
+        return response.status(404).send('Usuário não encontrado')
+    })
+}
+
+const updateCofrinho = async (request, response) => {
+    const id = request.params.id
+    const cofrinho = request.body
+    const options = { new: true }
+    const novoCofrinho = new cofrinhosModel(cofrinho)
+    const kid = await kidsModel.findById(id)
+    kid.cofrinho.saldoCofrinho += request.body.valor
+    kid.cofrinho.push(novoCofrinho)
+    kid.save((error) => {
+        if (error) {
+            return response.status(500).send(error)
+        }
+        return response.status(201).send(kid)
+    })
+}
+
 module.exports = {
     getAll,
     add,
+    getById,
+    update,
     remove,
-    getById
-
+    updateCofrinho
 }

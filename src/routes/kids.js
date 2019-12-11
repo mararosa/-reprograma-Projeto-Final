@@ -5,6 +5,9 @@ const controller = require("../controllers/KidsController")
 router.get('', controller.getAll)
 router.post('', controller.add)
 router.get('/:id', controller.getById)
+router.patch('/:id', controller.update)
 router.delete('/:id', controller.remove)
+router.patch('/:id/cofrinho', controller.updateCofrinho)
+// router.patch('/:id/cofrinho', controller.updateCofrinho)
 
 module.exports = router
