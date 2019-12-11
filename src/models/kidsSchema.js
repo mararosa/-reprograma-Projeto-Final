@@ -5,7 +5,7 @@ const KidsSchema = new Schema({
   nome: { type: String, required: true },
   sobrenome: { type: String, required: true },
   idade: { type: Number, max: 16, required: true },
-  senha: { type: String, required: true },
+  senha: { type: String, required: true, unique: true },
   login: { type: String, required: true, unique: true },
 })
 
