@@ -38,7 +38,7 @@ const getById = (request, response) => {
         if (kid) {
             return response.status(200).send(kid)
         }
-        return response.status(404).send('Usuário não encontrodo.')
+        return response.status(404).send('Usuário não encontrado.')
     })
 }
 
@@ -82,18 +82,33 @@ const updateCofrinho = async (request, response) => {
     const novoCofrinho = new cofrinhosModel(cofrinho)
     const kid = await kidsModel.findById(id)
     kid.saldoCofrinho += request.body.valor
-    console.log(kid.saldoCofrinho)
     kid.cofrinho.push(novoCofrinho)
-    kid.save((error, kid) => {
+    kid.save((error) => {
         if (error) {
             return response.status(500).send(error)
         }
         if (kid) {
         return response.status(201).send(kid)
         }
-        return response.status(404).send('Usuário não encontrado')
+        return response.status(404).send('Usuário não encontrado') // nao esta funcionando como faço? 
     })
 }
+
+const getCofrinho = async (request, response) => {
+    const id = request.params.id
+    await kidsModel.findById(id, (error, kid) => {
+      if (error) {
+        return response.status(500).send(error)
+      }
+  
+      if (kid) {
+        return response.status(200).send(kid.cofrinho)
+      }
+  
+      return response.status(404).send('Usuário não encontrado.')
+    })
+  }
+  
 
 module.exports = {
     getAll,
@@ -101,5 +116,6 @@ module.exports = {
     getById,
     update,
     remove,
-    updateCofrinho
+    updateCofrinho,
+    getCofrinho
 }
