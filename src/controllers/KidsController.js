@@ -138,7 +138,7 @@ const getGastos = async (request, response) => {
         return response.status(500).send(error)
       }
       if (kid) {
-        return response.status(200).send(kid.saldo)
+        return response.status(200).send(kid.gastos)
       }
       return response.status(404).send('Usuário não encontrado.')
     })
@@ -155,5 +155,5 @@ module.exports = {
     updateCofrinho,
     getCofrinho,
     updateGastos,
-    getGastos
+    getGastos,
 }

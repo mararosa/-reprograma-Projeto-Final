@@ -13,8 +13,8 @@ const KidsSchema = new Schema({
   saldoCofrinho: {type: Number, default: 0 },
   saldoGastos: {type: Number, default: 0 },
   cofrinho: [CofrinhosSchema], 
-  gastos: [CofrinhosSchema],
-  // desejo: [CofrinhosSchema]
+  gastos: [GastosSchema],
+  // desejo: [DesejosSchema]
 })
 
 const kidsModel = mongoose.model('kids', KidsSchema);
