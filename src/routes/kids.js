@@ -9,6 +9,7 @@ router.patch('/:id', controller.update)
 router.delete('/:id', controller.remove)
 router.patch('/:id/cofrinho', controller.updateCofrinho)
 router.get('/:id/cofrinho', controller.getCofrinho)
-// router.patch('/:id/cofrinho', controller.updateCofrinho)
+router.patch('/:id/gastos', controller.updateGastos)
+router.get('/:id/gastos', controller.getGastos)
 
 module.exports = router

@@ -36,7 +36,7 @@ const getById = (request, response) => {
             return response.status(500).send(error)
         }
         if (kid) {
-            return response.status(200).send(kid)
+           return response.status(200).send(kid)
         }
         return response.status(404).send('Usuário não encontrado.')
     })
@@ -81,6 +81,9 @@ const updateCofrinho = async (request, response) => {
     const options = { new: true }
     const novoCofrinho = new cofrinhosModel(cofrinho)
     const kid = await kidsModel.findById(id)
+    if (!id) {
+        return response.status(404).send('Usuário não encontrado')
+        }
     kid.saldoCofrinho += request.body.valor
     kid.cofrinho.push(novoCofrinho)
     kid.save((error) => {
@@ -100,15 +103,48 @@ const getCofrinho = async (request, response) => {
       if (error) {
         return response.status(500).send(error)
       }
-  
       if (kid) {
         return response.status(200).send(kid.cofrinho)
       }
-  
       return response.status(404).send('Usuário não encontrado.')
     })
   }
   
+  const updateGastos = async (request, response) => {
+    const id = request.params.id
+    const gastos = request.body
+    const options = { new: true }
+    const novoGasto = new gastosModel(gastos)
+    const kid = await kidsModel.findById(id)
+    if (!id) {
+    return response.status(404).send('Usuário não encontrado')
+    }
+    kid.saldoGastos += request.body.valor
+    kid.gastos.push(novoGasto)
+    kid.save((error) => {
+        if (error) {
+            return response.status(500).send(error)
+        }
+        if (kid) {
+        return response.status(201).send(kid)
+        }
+    })
+}
+
+const getGastos = async (request, response) => {
+    const id = request.params.id
+    await kidsModel.findById(id, (error, kid) => {
+      if (error) {
+        return response.status(500).send(error)
+      }
+      if (kid) {
+        return response.status(200).send(kid.saldo)
+      }
+      return response.status(404).send('Usuário não encontrado.')
+    })
+  }
+  
+
 
 module.exports = {
     getAll,
@@ -117,5 +153,7 @@ module.exports = {
     update,
     remove,
     updateCofrinho,
-    getCofrinho
+    getCofrinho,
+    updateGastos,
+    getGastos
 }

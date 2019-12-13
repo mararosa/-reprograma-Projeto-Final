@@ -11,8 +11,9 @@ const KidsSchema = new Schema({
   senha: { type: String, required: true },
   login: { type: String, required: true, unique: true },
   saldoCofrinho: {type: Number, default: 0 },
+  saldoGastos: {type: Number, default: 0 },
   cofrinho: [CofrinhosSchema], 
-  // gastos: [CofrinhosSchema],
+  gastos: [CofrinhosSchema],
   // desejo: [CofrinhosSchema]
 })
 
