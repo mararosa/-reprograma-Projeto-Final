@@ -81,6 +81,7 @@ const updateCofrinho = async (request, response) => {
     const options = { new: true }
     const novoCofrinho = new cofrinhosModel(cofrinho)
     const kid = await kidsModel.findById(id)
+    console.log(id)
     if (!id) {
         return response.status(404).send('Usuário não encontrado')
         }
@@ -93,7 +94,6 @@ const updateCofrinho = async (request, response) => {
         if (kid) {
         return response.status(201).send(kid)
         }
-        return response.status(404).send('Usuário não encontrado') // nao esta funcionando como faço? 
     })
 }
 
