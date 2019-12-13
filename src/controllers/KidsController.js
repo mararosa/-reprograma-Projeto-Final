@@ -81,8 +81,7 @@ const updateCofrinho = async (request, response) => {
     const options = { new: true }
     const novoCofrinho = new cofrinhosModel(cofrinho)
     const kid = await kidsModel.findById(id)
-    console.log(id)
-    if (!id) {
+    if (!kid) {
         return response.status(404).send('Usuário não encontrado')
         }
     kid.saldoCofrinho += request.body.valor
@@ -116,7 +115,7 @@ const getCofrinho = async (request, response) => {
     const options = { new: true }
     const novoGasto = new gastosModel(gastos)
     const kid = await kidsModel.findById(id)
-    if (!id) {
+    if (!kid) {
     return response.status(404).send('Usuário não encontrado')
     }
     kid.saldoGastos += request.body.valor
