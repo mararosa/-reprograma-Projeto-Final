@@ -6,9 +6,7 @@ const { desejosModel } = require('../models/DesejosSchema')
 
 connect()
 
-
-
-
+//vou apagar esse depois
 const getAll = (request, response) => {
     kidsModel.find((error, kids) => {
         if (error) {
@@ -18,6 +16,7 @@ const getAll = (request, response) => {
     })
 }
 
+//adicionar uma criança/perfil
 const add = (request, response) => {
     const novaKid = new kidsModel(request.body)
     novaKid.save((error) => {
@@ -28,23 +27,21 @@ const add = (request, response) => {
     })
 }
 
-
+//kid ver seu perfil
 const getById = (request, response) => {
     const id = request.params.id
     kidsModel.findById(id, (error, kid) => {
-        kid.cofrinho.remove(kid.cofrinho) //nao ta funcionado tentei dessa forma tb e nao rola
-        // delete kid.gastos // consigo colocar tudo isso em uma funcao e so chamar a função aqui?
-        // delete kid.desejo
         if (error) {
             return response.status(500).send(error)
         }
         if (kid) {
-           return response.status(200).send(kid)
+            return response.status(200).send(kid)
         }
         return response.status(404).send('Usuário não encontrado.')
     })
 }
 
+//kid atualizar seu perfil
 const update = (request, response) => {
     const id = request.params.id
     const kidUpdate = request.body
@@ -65,6 +62,7 @@ const update = (request, response) => {
     )
 }
 
+//kid remover o perfil do banco de dados
 const remove = (request, response) => {
     const id = request.params.id
     kidsModel.findByIdAndDelete(id, (error, kid) => {
@@ -83,15 +81,15 @@ const updateCofrinho = async (request, response) => {
     const cofrinho = request.body
     const options = { new: true }
     const novoCofrinho = new cofrinhosModel(cofrinho)
-    const kid = await kidsModel.findById(id) 
-    kid.saldoCofrinho += request.body.valor 
+    const kid = await kidsModel.findById(id)
+    kid.saldoCofrinho += request.body.valor
     kid.cofrinho.push(novoCofrinho)
     kid.save((error) => {
         if (error) {
-            return response.status(500).send(error) 
+            return response.status(500).send(error)
         }
         if (kid) {
-        return response.status(201).send(kid)
+            return response.status(201).send(kid)
         }
     })
 }
@@ -99,16 +97,16 @@ const updateCofrinho = async (request, response) => {
 const getCofrinho = async (request, response) => {
     const id = request.params.id
     await kidsModel.findById(id, (error, kid) => {
-      if (error) {
-        return response.status(500).send(error)
-      }
-      if (kid) {
-        return response.status(200).send(kid.cofrinho)
-      }
-      return response.status(404).send('Usuário não encontrado.')
+        if (error) {
+            return response.status(500).send(error)
+        }
+        if (kid) {
+            return response.status(200).send(kid.cofrinho)
+        }
+        return response.status(404).send('Usuário não encontrado.')
     })
-  }
-  
+}
+
 //   const updateGastos = async (request, response) => {
 //     const id = request.params.id
 //     const gastos = request.body
@@ -142,7 +140,7 @@ const getCofrinho = async (request, response) => {
 //       return response.status(404).send('Usuário não encontrado.')
 //     })
 //   }
-  
+
 const addDesejo = async (request, response) => { // nao quero que a kid coloque mais de um desejo/objetivo
     const id = request.params.id
     const desejo = new desejosModel(request.body)
@@ -154,7 +152,7 @@ const addDesejo = async (request, response) => { // nao quero que a kid coloque 
             return response.status(500).send(error)
         }
         if (kid) {
-        return response.status(201).send(kid)
+            return response.status(201).send(kid)
         }
     })
 }
@@ -162,16 +160,16 @@ const addDesejo = async (request, response) => { // nao quero que a kid coloque 
 const getDesejo = async (request, response) => {
     const id = request.params.id
     await kidsModel.findById(id, (error, kid) => {
-      if (error) {
-        return response.status(500).send(error)
-      }
-      if (kid) {
-        return response.status(200).send(kid.desejo)
-      }
-      return response.status(404).send('Usuário não encontrado.')
+        if (error) {
+            return response.status(500).send(error)
+        }
+        if (kid) {
+            return response.status(200).send(kid.desejo)
+        }
+        return response.status(404).send('Usuário não encontrado.')
     })
-  }
-  
+}
+
 
 module.exports = {
     getAll,
