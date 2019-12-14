@@ -13,7 +13,7 @@ const KidsSchema = new Schema({
   saldoCofrinho: {type: Number, default: 0 },
   saldoGastos: {type: Number, default: 0 },
   cofrinho: [CofrinhosSchema], 
-  gastos: [GastosSchema],
+  // gastos: [GastosSchema],
   desejo: [DesejosSchema]
 })
 

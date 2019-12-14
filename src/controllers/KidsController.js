@@ -1,7 +1,7 @@
 const { connect } = require('../models/dataBase')
 const kidsModel = require('../models/KidsSchema')
 const { cofrinhosModel } = require('../models/CofrinhosSchema')
-const { gastosModel } = require('../models/GastosSchema')
+// const { gastosModel } = require('../models/GastosSchema')
 const { desejosModel } = require('../models/DesejosSchema')
 
 connect()
@@ -32,6 +32,9 @@ const add = (request, response) => {
 const getById = (request, response) => {
     const id = request.params.id
     kidsModel.findById(id, (error, kid) => {
+        kid.cofrinho.remove(kid.cofrinho) //nao ta funcionado tentei dessa forma tb e nao rola
+        // delete kid.gastos // consigo colocar tudo isso em uma funcao e so chamar a função aqui?
+        // delete kid.desejo
         if (error) {
             return response.status(500).send(error)
         }
@@ -81,18 +84,13 @@ const updateCofrinho = async (request, response) => {
     const options = { new: true }
     const novoCofrinho = new cofrinhosModel(cofrinho)
     const kid = await kidsModel.findById(id) 
-    console.log(kid)
-    // if (!kid) {
-    //     return response.status(404).send('Usuário não encontrado')
-    //     }
+    kid.saldoCofrinho += request.body.valor 
     kid.cofrinho.push(novoCofrinho)
-    console.log(kid.cofrinho)
     kid.save((error) => {
         if (error) {
-            return response.status(500).send(error) // ele da erro ai nao chega aqui fica no looping pq precisa fazer um calculo cumulativo e nao consegur
+            return response.status(500).send(error) 
         }
         if (kid) {
-        kid.saldoCofrinho += request.body.valor // ele tenta fazer isso antes e como id passada eh errada ele trava
         return response.status(201).send(kid)
         }
     })
@@ -111,39 +109,39 @@ const getCofrinho = async (request, response) => {
     })
   }
   
-  const updateGastos = async (request, response) => {
-    const id = request.params.id
-    const gastos = request.body
-    const options = { new: true }
-    const novoGasto = new gastosModel(gastos)
-    const kid = await kidsModel.findById(id)
-    // if (!kid) {
-    // return response.status(404).send('Usuário não encontrado') //nao faz sentido ter essa rota
-    // }
-    kid.saldoGastos += request.body.valor
-    kid.gastos.push(novoGasto)
-    kid.save((error) => {
-        if (error) {
-            return response.status(500).send(error)
-        }
-        if (kid) {
-        return response.status(201).send(kid)
-        }
-    })
-}
+//   const updateGastos = async (request, response) => {
+//     const id = request.params.id
+//     const gastos = request.body
+//     const options = { new: true }
+//     const novoGasto = new gastosModel(gastos)
+//     const kid = await kidsModel.findById(id)
+//     // if (!kid) {
+//     // return response.status(404).send('Usuário não encontrado') //nao faz sentido ter essa rota
+//     // }
+//     kid.saldoGastos += request.body.valor
+//     kid.gastos.push(novoGasto)
+//     kid.save((error) => {
+//         if (error) {
+//             return response.status(500).send(error)
+//         }
+//         if (kid) {
+//         return response.status(201).send(kid)
+//         }
+//     })
+// }
 
-const getGastos = async (request, response) => {
-    const id = request.params.id
-    await kidsModel.findById(id, (error, kid) => {
-      if (error) {
-        return response.status(500).send(error)
-      }
-      if (kid) {
-        return response.status(200).send(kid.gastos)
-      }
-      return response.status(404).send('Usuário não encontrado.')
-    })
-  }
+// const getGastos = async (request, response) => {
+//     const id = request.params.id
+//     await kidsModel.findById(id, (error, kid) => {
+//       if (error) {
+//         return response.status(500).send(error)
+//       }
+//       if (kid) {
+//         return response.status(200).send(kid.gastos)
+//       }
+//       return response.status(404).send('Usuário não encontrado.')
+//     })
+//   }
   
 const addDesejo = async (request, response) => { // nao quero que a kid coloque mais de um desejo/objetivo
     const id = request.params.id
@@ -168,7 +166,7 @@ const getDesejo = async (request, response) => {
         return response.status(500).send(error)
       }
       if (kid) {
-        return response.status(200).send(kid.gastos)
+        return response.status(200).send(kid.desejo)
       }
       return response.status(404).send('Usuário não encontrado.')
     })
@@ -183,8 +181,8 @@ module.exports = {
     remove,
     updateCofrinho,
     getCofrinho,
-    updateGastos,
-    getGastos,
+    // updateGastos,
+    // getGastos,
     addDesejo,
     getDesejo,
 }
