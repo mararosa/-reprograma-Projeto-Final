@@ -10,11 +10,12 @@ const KidsSchema = new Schema({
   idade: { type: Number, mix: 6, required: true },
   senha: { type: String, required: true },
   login: { type: String, required: true, unique: true },
-  
-  cofrinho: [CofrinhosSchema], 
+  cofrinhos: [CofrinhosSchema], 
   // gastos: [GastosSchema],
   desejo: [DesejosSchema]
 })
+
+// KidsSchema.add({cofrinhos: [CofrinhosSchema]})
 
 const kidsModel = mongoose.model('kids', KidsSchema);
 
