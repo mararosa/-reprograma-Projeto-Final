@@ -3,8 +3,9 @@ const Schema = mongoose.Schema;
 const DesejosSchema = new Schema({
   _id: { type: mongoose.Schema.Types.ObjectId, auto: true, required: true },
   desejo: { type: String, required: true },
-  dataConquistar: { type: Date, required: true },
-  descricaoData: {type: String},
+  data_conquistar: { type: Date, required: true },
+  data_desejou: {type: Date, default: new Date},
+  descricao_data: {type: String},
   valor: { type: Number, required: true },
 })
 

@@ -118,7 +118,7 @@ const getCofrinho = async (request, response) => {
     const novoGasto = new gastosModel(gastos)
     const kid = await kidsModel.findById(id)
     // if (!kid) {
-    // return response.status(404).send('Usuário não encontrado')
+    // return response.status(404).send('Usuário não encontrado') //nao faz sentido ter essa rota
     // }
     kid.saldoGastos += request.body.valor
     kid.gastos.push(novoGasto)
@@ -145,7 +145,35 @@ const getGastos = async (request, response) => {
     })
   }
   
+const addDesejo = async (request, response) => { // nao quero que a kid coloque mais de um desejo/objetivo
+    const id = request.params.id
+    const desejo = new desejosModel(request.body)
+    const options = { new: true }
+    const kid = await kidsModel.findById(id)
+    kid.desejo.push(desejo)
+    kid.save((error) => {
+        if (error) {
+            return response.status(500).send(error)
+        }
+        if (kid) {
+        return response.status(201).send(kid)
+        }
+    })
+}
 
+const getDesejo = async (request, response) => {
+    const id = request.params.id
+    await kidsModel.findById(id, (error, kid) => {
+      if (error) {
+        return response.status(500).send(error)
+      }
+      if (kid) {
+        return response.status(200).send(kid.gastos)
+      }
+      return response.status(404).send('Usuário não encontrado.')
+    })
+  }
+  
 
 module.exports = {
     getAll,
@@ -157,4 +185,6 @@ module.exports = {
     getCofrinho,
     updateGastos,
     getGastos,
+    addDesejo,
+    getDesejo,
 }

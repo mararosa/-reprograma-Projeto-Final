@@ -11,5 +11,7 @@ router.patch('/:id/cofrinho', controller.updateCofrinho)
 router.get('/:id/cofrinho', controller.getCofrinho)
 router.patch('/:id/gastos', controller.updateGastos)
 router.get('/:id/gastos', controller.getGastos)
+router.post('/:id/desejo', controller.addDesejo)
+router.get('/:id/desejo', controller.getDesejo)
 
 module.exports = router
