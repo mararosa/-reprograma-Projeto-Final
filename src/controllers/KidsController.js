@@ -80,17 +80,19 @@ const updateCofrinho = async (request, response) => {
     const cofrinho = request.body
     const options = { new: true }
     const novoCofrinho = new cofrinhosModel(cofrinho)
-    const kid = await kidsModel.findById(id)
-    if (!kid) {
-        return response.status(404).send('Usuário não encontrado')
-        }
-    kid.saldoCofrinho += request.body.valor
+    const kid = await kidsModel.findById(id) 
+    console.log(kid)
+    // if (!kid) {
+    //     return response.status(404).send('Usuário não encontrado')
+    //     }
     kid.cofrinho.push(novoCofrinho)
+    console.log(kid.cofrinho)
     kid.save((error) => {
         if (error) {
-            return response.status(500).send(error)
+            return response.status(500).send(error) // ele da erro ai nao chega aqui fica no looping pq precisa fazer um calculo cumulativo e nao consegur
         }
         if (kid) {
+        kid.saldoCofrinho += request.body.valor // ele tenta fazer isso antes e como id passada eh errada ele trava
         return response.status(201).send(kid)
         }
     })
@@ -115,9 +117,9 @@ const getCofrinho = async (request, response) => {
     const options = { new: true }
     const novoGasto = new gastosModel(gastos)
     const kid = await kidsModel.findById(id)
-    if (!kid) {
-    return response.status(404).send('Usuário não encontrado')
-    }
+    // if (!kid) {
+    // return response.status(404).send('Usuário não encontrado')
+    // }
     kid.saldoGastos += request.body.valor
     kid.gastos.push(novoGasto)
     kid.save((error) => {
