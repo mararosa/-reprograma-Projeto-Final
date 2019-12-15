@@ -4,9 +4,9 @@ const CofrinhosSchema = new Schema({
   _id: { type: mongoose.Schema.Types.ObjectId, auto: true, required: true },
   nome_cofrinho: {type: String, required: true},
   data: { type: Date, default: Date.now },
-  // valor: { type: Number},
   saldoCofrinho: {type: Number, default: 0 },
-  saldoGastos: {type: Number, default: 0 },
+  poupado: {type: Number, default: 0},
+  gastos: {type: Number, default: 0 },
   
 })
 

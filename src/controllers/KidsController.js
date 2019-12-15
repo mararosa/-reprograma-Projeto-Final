@@ -97,12 +97,13 @@ const updateCofrinhoEntradas = async (request, response) => {
     const idCofrinho = request.params.idCofrinho
     const kid = await kidsModel.findById(id)
     const cofrinho = kid.cofrinhos.find((cofrinho) => idCofrinho == cofrinho._id)
-    cofrinho.saldoCofrinho += request.body.valor
-     kid.save((error) => {
+    cofrinho.poupado += request.body.valor
+    cofrinho.saldoCofrinho = cofrinho.poupado - cofrinho.gastos
+    kid.save((error) => {
         if (error) {
             return response.status(500).send(error)
         }
-            return response.status(200).send(kid)
+        return response.status(200).send(kid)
     })
 }
 
@@ -112,24 +113,42 @@ const updateCofrinhoSaidas = async (request, response) => {
     const idCofrinho = request.params.idCofrinho
     const kid = await kidsModel.findById(id)
     const cofrinho = kid.cofrinhos.find((cofrinho) => idCofrinho == cofrinho._id)
-    cofrinho.saldoGastos += request.body.valor
-     kid.save((error) => {
+    cofrinho.gastos += request.body.valor
+    cofrinho.saldoCofrinho = cofrinho.poupado - cofrinho.gastos
+    kid.save((error) => {
         if (error) {
             return response.status(500).send(error)
         }
-            return response.status(200).send(kid)
+        return response.status(200).send(kid)
     })
 }
-// const getCofrinho = async (request, response) => {
+
+// Lista cofrinho pela id
+const getCofrinhoById = async (request, response) => {
+    const id = request.params.id
+    const idCofrinho = request.params.idCofrinho
+    const kid = await kidsModel.findById(id)
+    console.log(kid)
+    const cofrinho = kid.cofrinhos.find((cofrinho) => {
+        return idCofrinho == cofrinho._id
+    })
+    if (cofrinho) {
+        return response.status(200).send(cofrinho)
+    }
+    return response.status(404).send('Cofrinho não encontrado.')
+}
+
+//remove cofrinho pela id
+// const removeCofrinho = (request, response) => {
 //     const id = request.params.id
-//     await kidsModel.findById(id, (error, kid) => {
+//     kidsModel.findByIdAndDelete(id, (error, kid) => {
 //         if (error) {
 //             return response.status(500).send(error)
 //         }
 //         if (kid) {
-//             return response.status(200).send(kid.cofrinho)
+//             return response.status(200).send('Usuário deletado!')
 //         }
-//         return response.status(404).send('Usuário não encontrado.')
+//         return response.status(404).send('Usuário não encontrado')
 //     })
 // }
 
@@ -206,7 +225,7 @@ module.exports = {
     addCofrinhos,
     updateCofrinhoEntradas,
     updateCofrinhoSaidas,
-    // getCofrinho,
+    getCofrinhoById,
     // // updateGastos,
     // // getGastos,
     // addDesejo,

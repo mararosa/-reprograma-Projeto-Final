@@ -10,9 +10,10 @@ router.delete('/:id', controller.remove) // remove perfil
 router.post('/:id/cofrinhos', controller.addCofrinhos) // cria um cofrinho
 router.patch('/:id/cofrinhos/:idCofrinho/adicionar', controller.updateCofrinhoEntradas) // atualiza cofrinho, adicionar valores
 router.patch('/:id/cofrinhos/:idCofrinho/retirar', controller.updateCofrinhoSaidas) // atualizar cofrinho, retirar valores
+router.get('/:id/cofrinhos/:idCofrinho', controller.getCofrinhoById) // lista cofrinho
+// router.delete('/:id/cofrinhos/:idCofrinho', controller.removeCofrinho) // remove perfil 
 
 
-// router.get('/:id/cofrinho', controller.getCofrinho)
 // // router.patch('/:id/gastos', controller.updateGastos)
 // // router.get('/:id/gastos', controller.getGastos)
 // router.post('/:id/desejo', controller.addDesejo)
