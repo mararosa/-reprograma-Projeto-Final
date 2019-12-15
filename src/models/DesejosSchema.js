@@ -6,7 +6,6 @@ const DesejosSchema = new Schema({
   valor: { type: Number, required: true },
   data_conquistar: { type: Date, required: true },
   data: {type: Date, default: Date.now},
-  voce_precisa_poupar: {type: Number, default: 0},
 })
 
 const desejosModel = mongoose.model('desejos', DesejosSchema);

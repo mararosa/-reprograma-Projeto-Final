@@ -14,6 +14,7 @@ router.get('/:id/cofrinhos/:idCofrinho', controller.getCofrinhoById) // lista co
 router.delete('/:id/cofrinhos/:idCofrinho', controller.removeCofrinho) // remove perfil 
 // router.post('/:id/cofrinhos/:idCofrinho/desejos', controller.addDesejos) COMO EU QUERIA// cria um desejo
 router.post('/:id/desejos', controller.addDesejos) // cria um desejo
+router.patch('/:id/desejos/:idDesejo/calcularValor', controller.calculaValorDesejo) //
 // router.get('/:id/desejo', controller.getDesejo)
 
 module.exports = router
