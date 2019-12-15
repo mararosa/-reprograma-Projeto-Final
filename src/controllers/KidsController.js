@@ -128,7 +128,6 @@ const getCofrinhoById = async (request, response) => {
     const id = request.params.id
     const idCofrinho = request.params.idCofrinho
     const kid = await kidsModel.findById(id)
-    console.log(kid)
     const cofrinho = kid.cofrinhos.find((cofrinho) => {
         return idCofrinho == cofrinho._id
     })
@@ -139,95 +138,102 @@ const getCofrinhoById = async (request, response) => {
 }
 
 //remove cofrinho pela id
-// const removeCofrinho = (request, response) => {
-//     const id = request.params.id
-//     kidsModel.findByIdAndDelete(id, (error, kid) => {
-//         if (error) {
-//             return response.status(500).send(error)
-//         }
-//         if (kid) {
-//             return response.status(200).send('Usuário deletado!')
-//         }
-//         return response.status(404).send('Usuário não encontrado')
-//     })
-// }
-
-// //   const updateGastos = async (request, response) => {
-// //     const id = request.params.id
-// //     const gastos = request.body
-// //     const options = { new: true }
-// //     const novoGasto = new gastosModel(gastos)
-// //     const kid = await kidsModel.findById(id)
-// //     // if (!kid) {
-// //     // return response.status(404).send('Usuário não encontrado') //nao faz sentido ter essa rota
-// //     // }
-// //     kid.saldoGastos += request.body.valor
-// //     kid.gastos.push(novoGasto)
-// //     kid.save((error) => {
-// //         if (error) {
-// //             return response.status(500).send(error)
-// //         }
-// //         if (kid) {
-// //         return response.status(201).send(kid)
-// //         }
-// //     })
-// // }
-
-// // const getGastos = async (request, response) => {
-// //     const id = request.params.id
-// //     await kidsModel.findById(id, (error, kid) => {
-// //       if (error) {
-// //         return response.status(500).send(error)
-// //       }
-// //       if (kid) {
-// //         return response.status(200).send(kid.gastos)
-// //       }
-// //       return response.status(404).send('Usuário não encontrado.')
-// //     })
-// //   }
-
-// const addDesejo = async (request, response) => { // nao quero que a kid coloque mais de um desejo/objetivo
-//     const id = request.params.id
-//     const desejo = new desejosModel(request.body)
-//     const options = { new: true }
-//     const kid = await kidsModel.findById(id)
-//     kid.desejo.push(desejo)
-//     kid.save((error) => {
-//         if (error) {
-//             return response.status(500).send(error)
-//         }
-//         if (kid) {
-//             return response.status(201).send(kid)
-//         }
-//     })
-// }
-
-// const getDesejo = async (request, response) => {
-//     const id = request.params.id
-//     await kidsModel.findById(id, (error, kid) => {
-//         if (error) {
-//             return response.status(500).send(error)
-//         }
-//         if (kid) {
-//             return response.status(200).send(kid.desejo)
-//         }
-//         return response.status(404).send('Usuário não encontrado.')
-//     })
-// }
-
-
-module.exports = {
-    getAll,
-    add,
-    getById,
-    update,
-    remove,
-    addCofrinhos,
-    updateCofrinhoEntradas,
-    updateCofrinhoSaidas,
-    getCofrinhoById,
-    // // updateGastos,
-    // // getGastos,
-    // addDesejo,
-    // getDesejo,
+const removeCofrinho = async (request, response) => {
+    const id = request.params.id
+    const idCofrinho = request.params.idCofrinho
+    const kid = await kidsModel.findById(id)
+    const cofrinho = kid.cofrinhos.find(cofrinho => idCofrinho == cofrinho._id)
+    const cofrinhoIndex = kid.cofrinhos.indexOf(cofrinho)
+    kid.cofrinhos.splice(cofrinhoIndex, 1)
+    kid.save((error, kid) => {
+        if (error) {
+            return response.status(500).send(error)
+        }
+        if (kid) {
+            return response.status(200).send('Cofrinho deletado!')
+        }
+        return response.status(404).send('Cofrinho não encontrado')
+    })
 }
+
+
+    // //   const updateGastos = async (request, response) => {
+    // //     const id = request.params.id
+    // //     const gastos = request.body
+    // //     const options = { new: true }
+    // //     const novoGasto = new gastosModel(gastos)
+    // //     const kid = await kidsModel.findById(id)
+    // //     // if (!kid) {
+    // //     // return response.status(404).send('Usuário não encontrado') //nao faz sentido ter essa rota
+    // //     // }
+    // //     kid.saldoGastos += request.body.valor
+    // //     kid.gastos.push(novoGasto)
+    // //     kid.save((error) => {
+    // //         if (error) {
+    // //             return response.status(500).send(error)
+    // //         }
+    // //         if (kid) {
+    // //         return response.status(201).send(kid)
+    // //         }
+    // //     })
+    // // }
+
+    // // const getGastos = async (request, response) => {
+    // //     const id = request.params.id
+    // //     await kidsModel.findById(id, (error, kid) => {
+    // //       if (error) {
+    // //         return response.status(500).send(error)
+    // //       }
+    // //       if (kid) {
+    // //         return response.status(200).send(kid.gastos)
+    // //       }
+    // //       return response.status(404).send('Usuário não encontrado.')
+    // //     })
+    // //   }
+
+    // const addDesejo = async (request, response) => { // nao quero que a kid coloque mais de um desejo/objetivo
+    //     const id = request.params.id
+    //     const desejo = new desejosModel(request.body)
+    //     const options = { new: true }
+    //     const kid = await kidsModel.findById(id)
+    //     kid.desejo.push(desejo)
+    //     kid.save((error) => {
+    //         if (error) {
+    //             return response.status(500).send(error)
+    //         }
+    //         if (kid) {
+    //             return response.status(201).send(kid)
+    //         }
+    //     })
+    // }
+
+    // const getDesejo = async (request, response) => {
+    //     const id = request.params.id
+    //     await kidsModel.findById(id, (error, kid) => {
+    //         if (error) {
+    //             return response.status(500).send(error)
+    //         }
+    //         if (kid) {
+    //             return response.status(200).send(kid.desejo)
+    //         }
+    //         return response.status(404).send('Usuário não encontrado.')
+    //     })
+    // }
+
+
+    module.exports = {
+        getAll,
+        add,
+        getById,
+        update,
+        remove,
+        addCofrinhos,
+        updateCofrinhoEntradas,
+        updateCofrinhoSaidas,
+        getCofrinhoById,
+        removeCofrinho
+        // // updateGastos,
+        // // getGastos,
+        // addDesejo,
+        // getDesejo,
+    }
