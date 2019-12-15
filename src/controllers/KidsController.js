@@ -77,7 +77,7 @@ const remove = (request, response) => {
 }
 
 // adicionar um cofrinho, ex, cofrinho do desejo
-const addCofrinho = async (request, response) => {
+const addCofrinhos = async (request, response) => {
     const id = request.params.id
     const cofrinho = request.body
     const novoCofrinho = new cofrinhosModel(cofrinho)
@@ -91,13 +91,12 @@ const addCofrinho = async (request, response) => {
     })
 }
 
-// Atualizar o cofrinho, adicionar valores no cofrinho. preciso pedir a id do cofrinho
-const updateCofrinho = async (request, response) => {
+// Atualiza o cofrinho, adiciona valores no cofrinho. preciso pedir a id do cofrinho
+const updateCofrinhoEntradas = async (request, response) => {
     const id = request.params.id
     const idCofrinho = request.params.idCofrinho
     const kid = await kidsModel.findById(id)
     const cofrinho = kid.cofrinhos.find((cofrinho) => idCofrinho == cofrinho._id)
-    console.log(cofrinho)
     cofrinho.saldoCofrinho += request.body.valor
      kid.save((error) => {
         if (error) {
@@ -107,6 +106,20 @@ const updateCofrinho = async (request, response) => {
     })
 }
 
+// Atualiza o cofrinho, retira valores do cofrinho.
+const updateCofrinhoSaidas = async (request, response) => {
+    const id = request.params.id
+    const idCofrinho = request.params.idCofrinho
+    const kid = await kidsModel.findById(id)
+    const cofrinho = kid.cofrinhos.find((cofrinho) => idCofrinho == cofrinho._id)
+    cofrinho.saldoGastos += request.body.valor
+     kid.save((error) => {
+        if (error) {
+            return response.status(500).send(error)
+        }
+            return response.status(200).send(kid)
+    })
+}
 // const getCofrinho = async (request, response) => {
 //     const id = request.params.id
 //     await kidsModel.findById(id, (error, kid) => {
@@ -190,8 +203,9 @@ module.exports = {
     getById,
     update,
     remove,
-    addCofrinho,
-    updateCofrinho,
+    addCofrinhos,
+    updateCofrinhoEntradas,
+    updateCofrinhoSaidas,
     // getCofrinho,
     // // updateGastos,
     // // getGastos,
