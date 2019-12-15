@@ -10,8 +10,8 @@ function diffDias(dataGerada, dataDesejo, valor) {
     // Discard the time and time-zone information.
     const utc1 = Date.UTC(dataGerada.getFullYear(), dataGerada.getMonth(), dataGerada.getDate());
     const utc2 = Date.UTC(dataDesejo.getFullYear(), dataDesejo.getMonth(), dataDesejo.getDate());
-    
-    const dias =  Math.floor((utc2 - utc1) / calculo) 
+
+    const dias = Math.floor((utc2 - utc1) / calculo)
     return Math.abs(valor / dias);
 }
 
@@ -189,20 +189,21 @@ const addDesejos = async (request, response) => {
 const calculaValorDesejo = async (request, response) => {
     const id = request.params.id
     const idDesejo = request.params.idDesejo
+    const valor = request.body.valor
     const kid = await kidsModel.findById(id)
     console.log(kid)
     const desejo = kid.desejos.find((desejo) => idDesejo == desejo._id)
-   console.log(desejo)
+    console.log(desejo)
     const dataGerada = desejo.data,
-    dataDesejo = desejo.data_conquistar,
-    valor = request.body.valor
-    diff = diffDias(dataGerada, dataDesejo, valor);
-    console.log(diff)
+        dataDesejo = desejo.data_conquistar,
+        valorDias = diffDias(dataGerada, dataDesejo, valor);
+    desejo.valor = valor
+    console.log(valorDias)
     kid.save((error) => {
         if (error) {
             return response.status(500).send(error)
         }
-        return response.status(200).send('Você precisará poupar: ' + diff + ' por dia :) ')
+        return response.status(200).send('Você precisará poupar: ' + valorDias + ' por dia :) ')
     })
 }
 
