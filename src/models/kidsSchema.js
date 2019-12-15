@@ -11,7 +11,6 @@ const KidsSchema = new Schema({
   senha: { type: String, required: true },
   login: { type: String, required: true, unique: true },
   cofrinhos: [CofrinhosSchema], 
-  // gastos: [GastosSchema],
   desejo: [DesejosSchema]
 })
 
