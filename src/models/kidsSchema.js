@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { CofrinhosSchema } = require('./CofrinhosSchema')
-const { GastosSchema } = require('./GastosSchema')
 const { DesejosSchema } = require('./DesejosSchema')
 const Schema = mongoose.Schema;
 const KidsSchema = new Schema({
@@ -11,7 +10,7 @@ const KidsSchema = new Schema({
   senha: { type: String, required: true },
   login: { type: String, required: true, unique: true },
   cofrinhos: [CofrinhosSchema], 
-  desejo: [DesejosSchema]
+  desejos: [DesejosSchema]
 })
 
 // KidsSchema.add({cofrinhos: [CofrinhosSchema]})
