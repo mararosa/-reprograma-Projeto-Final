@@ -4,9 +4,10 @@ const CofrinhosSchema = new Schema({
   _id: { type: mongoose.Schema.Types.ObjectId, auto: true, required: true },
   nome_cofrinho: {type: String, required: true},
   data: { type: Date, default: Date.now },
-  valor: { type: Number, default: 0, required: true },
+  // valor: { type: Number},
   saldoCofrinho: {type: Number, default: 0 },
   saldoGastos: {type: Number, default: 0 },
+  
 })
 
 const cofrinhosModel = mongoose.model('cofrinhos', CofrinhosSchema);

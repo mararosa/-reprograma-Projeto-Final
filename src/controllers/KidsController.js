@@ -1,5 +1,5 @@
 const { connect } = require('../models/dataBase')
-const kidsModel  = require('../models/KidsSchema')
+const kidsModel = require('../models/KidsSchema')
 const { cofrinhosModel } = require('../models/CofrinhosSchema')
 // const { gastosModel } = require('../models/GastosSchema')
 const { desejosModel } = require('../models/DesejosSchema')
@@ -91,24 +91,19 @@ const addCofrinho = async (request, response) => {
     })
 }
 
-  // Atualizar o cofrinho, inserir valores no cofrinho. preciso pedir a id do cofrinho
+// Atualizar o cofrinho, adicionar valores no cofrinho. preciso pedir a id do cofrinho
 const updateCofrinho = async (request, response) => {
     const id = request.params.id
     const idCofrinho = request.params.idCofrinho
-    const options = { new: true }
-    const novoCofrinho = new cofrinhosModel(cofrinho)
     const kid = await kidsModel.findById(id)
-kid.cofrinhos.saldoCofrinho += request.body.valor
-    kid.saldoCofrinho += request.body.valor
-    // kid.saldoGastos += request.body.valor //vai para post cofrinho
-    kid.cofrinho.push(novoCofrinho)
-    kid.save((error) => {
+    const cofrinho = kid.cofrinhos.find((cofrinho) => idCofrinho == cofrinho._id)
+    console.log(cofrinho)
+    cofrinho.saldoCofrinho += request.body.valor
+     kid.save((error) => {
         if (error) {
             return response.status(500).send(error)
         }
-        if (kid) {
-            return response.status(201).send(kid)
-        }
+            return response.status(200).send(kid)
     })
 }
 
@@ -196,7 +191,7 @@ module.exports = {
     update,
     remove,
     addCofrinho,
-    // updateCofrinho,
+    updateCofrinho,
     // getCofrinho,
     // // updateGastos,
     // // getGastos,

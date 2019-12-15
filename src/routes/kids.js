@@ -8,7 +8,7 @@ router.get('/:id', controller.getById) //ver seu perfil
 router.patch('/:id', controller.update) // atualizar perfil
 router.delete('/:id', controller.remove) // remover perfil 
 router.post('/:id/cofrinhos', controller.addCofrinho) // criar um cofrinho
-// router.patch('/:id/cofrinhos/:idCofrinhos', controller.updateCofrinho) // atualizar cofrinho, inserir valores
+router.patch('/:id/cofrinhos/:idCofrinho/adicionar', controller.updateCofrinho) // atualizar cofrinho, adicionar valores
 
 
 
