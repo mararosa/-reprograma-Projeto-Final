@@ -4,6 +4,7 @@ const { cofrinhosModel } = require('../models/CofrinhosSchema')
 const { desejosModel } = require('../models/DesejosSchema')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const SEGREDO = "MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAik2HM1Ke1T8VbdG4M+a2IKPf3MoNjgAV/0nkqRoEqJNh8LsghEu7AaaBvSD9G2XnnXT8KsMAFsLu7x98vqWA1QIDAQABAkBuXVPIpuPM9BxbmIHQGQm5nkwkWrDaYkMrh4ILV5HkGxe5JPYTRUaNfY6BvHXk9tMZSWVP2BskwaBSefyiMc95AiEA37gKQ0R/60o9yLaUBLqYNUFPxcbvgDEn5zB1Omtm3yMCIQCeQk0liazOosLmHzyG9pZ2APVbE7UOuD6Y3LgRQa3bpwIgDFm6p1AGx9SHaKc7sK8ka/w5DTAYVLlh/I9eSWVYfoUCIBNMkovZVjF8t7fIZ2EuAPsy8rjAlnvNDBUoFWpFUCZRAiEAix9iepI6LS4sX+9/0pw9SrxVzMxoC7ZBjKZyA4sAttw="
 
 connect()
 //funcção para calcular o valor do desejo/dias

@@ -13,8 +13,6 @@ const KidsSchema = new Schema({
   desejos: [DesejosSchema]
 })
 
-// KidsSchema.add({cofrinhos: [CofrinhosSchema]})
-
 const kidsModel = mongoose.model('kids', KidsSchema);
 
 module.exports = kidsModel;
