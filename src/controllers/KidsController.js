@@ -282,6 +282,19 @@ const removeDesejo = async (request, response) => {
     })
 }
 
+//criar login
+const login = async (request, response) => {
+    const kidEncontrada = await kidsModel.findOne({ login: request.body.login })
+    if (kidEncontrada) {
+        const senhaCorreta = bcrypt.compareSync(request.body.senha, kidEncontrada.senha)
+        if (senhaCorreta) {
+            return response.status(200).send( 'Logado!')
+        }
+        return response.status(401).send('Senha incorreta.')
+    }
+    return response.status(404).send('Usuário não encontrado.')
+}
+
 
 module.exports = {
     getAll,
@@ -300,4 +313,5 @@ module.exports = {
     calculaValorDesejo,
     getDesejoById,
     removeDesejo,
+    login
 }

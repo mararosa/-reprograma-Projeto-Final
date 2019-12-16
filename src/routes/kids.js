@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require("../controllers/KidsController")
+const jwt = require('jsonwebtoken')
 
 router.get('', controller.getAll) //vou tirar depois 
 router.post('', controller.add) // adiciona kid
@@ -18,5 +19,6 @@ router.get('/:id/desejos', controller.getAllDesejos) // lista todos os desejos
 router.patch('/:id/desejos/:idDesejo/calcularValor', controller.calculaValorDesejo) // calcula valor do desejo 
 router.get('/:id/desejos/:idDesejo', controller.getDesejoById) // lista desejo
 router.delete('/:id/desejos/:idDesejo', controller.removeDesejo) // remove desejo
+router.post('/login', controller.login) //add login
 
 module.exports = router
