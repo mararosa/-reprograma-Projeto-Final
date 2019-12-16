@@ -255,6 +255,26 @@ const getDesejoById = async (request, response) => {
     return response.status(404).send('Desejo não encontrado.')
 }
 
+//remove desejo pela id
+const removeDesejo = async (request, response) => {
+    const id = request.params.id
+    const idDesejo = request.params.idDesejo
+    const kid = await kidsModel.findById(id)
+    const desejo = kid.desejos.find(desejo => idDesejo == desejo._id)
+    const desejoIndex = kid.desejos.indexOf(desejo)
+    kid.desejos.splice(desejoIndex, 1)
+    console.log(desejo) // ta dando undefined
+    kid.save((error, kid) => {
+        if (error) {
+            return response.status(500).send(error)
+        }
+        if (kid) {
+            return response.status(200).send('Desejo deletado!')
+        }
+        return response.status(404).send('Desejo não encontrado') //nao esta funcionando
+    })
+}
+
 
 module.exports = {
     getAll,
@@ -272,4 +292,5 @@ module.exports = {
     getAllDesejos,
     calculaValorDesejo,
     getDesejoById,
+    removeDesejo,
 }
