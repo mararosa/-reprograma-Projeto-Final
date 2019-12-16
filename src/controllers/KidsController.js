@@ -4,7 +4,7 @@ const { cofrinhosModel } = require('../models/CofrinhosSchema')
 const { desejosModel } = require('../models/DesejosSchema')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const SEGREDO = "MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAik2HM1Ke1T8VbdG4M+a2IKPf3MoNjgAV/0nkqRoEqJNh8LsghEu7AaaBvSD9G2XnnXT8KsMAFsLu7x98vqWA1QIDAQABAkBuXVPIpuPM9BxbmIHQGQm5nkwkWrDaYkMrh4ILV5HkGxe5JPYTRUaNfY6BvHXk9tMZSWVP2BskwaBSefyiMc95AiEA37gKQ0R/60o9yLaUBLqYNUFPxcbvgDEn5zB1Omtm3yMCIQCeQk0liazOosLmHzyG9pZ2APVbE7UOuD6Y3LgRQa3bpwIgDFm6p1AGx9SHaKc7sK8ka/w5DTAYVLlh/I9eSWVYfoUCIBNMkovZVjF8t7fIZ2EuAPsy8rjAlnvNDBUoFWpFUCZRAiEAix9iepI6LS4sX+9/0pw9SrxVzMxoC7ZBjKZyA4sAttw="
+const SEGREDO = 'MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMvjU3H0JWqXLTN1krauUYFEziZLTm8iLmDjL1TUg6u+58PZY0olHh3hou/q5EdOU5y5P1UmIAQ0SquueCXw2NSvevDstQ3pq5EJDzsLq5mU8S/IAQNXMO5T+hSQ+SsMkBHKS2IgjWC3v4Aqn/s4ZCFbG7qfSf3RIgZshbSuZDbNAgMBAAECgYEAltHnJTFkCDAiSKGdULMsKYKbOCqWr5DKW/NSTN8TM5V5Xh/N2cgROitx2yWXjcO8B//kgHk+T73aypq5198MlR0Ks7tPCv+vMIXflobSRj+Hqas68X24PSss4REq70fUBUbI2hMeiVhOSxtwKWhL5v4uQmQseIia2dUUKmJ8XaUCQQD1SUpwXkc9ABe3OV89zhfqAjb4SCnF5/EqkfjG7/ns3e/Q6sxanDEkglW6rmsjT4x0DqV7ziWlDTG1WP8EC+YvAkEA1MsiHFKErFob12yicD2ZD9zebLT2/Nu/vDVH+NftLH/x6oRTPMIuMUTpCGDaYj6lSw9MI7IawV5ENLt8K/LvwwJAYOQyo3Cac142AAqJtMBUcfut+yWGWsbkXQyMWQkykH6a3MvjLWfFgcZ6VuPPLoOd17pxZBZqiGhN2nTtR4vrwQJAJVYa/xMvejo5RlwmSEFWmOTtFe/OomFATBqhLTVdxQASB07+d9uuVTC9Hp430yMgx4HAn0bB0QnkN8hpqiBvFwJALPRxgbjIK51DstortwIGAas9n7UUYWA74uXfGDLkuV9knq0/1T7F2VU4HuYKfHEneXLk/W55bCDc2OBinkAVwA=='
 
 connect()
 //funcção para calcular o valor do desejo/dias
@@ -267,20 +267,17 @@ const getDesejoById = async (request, response) => {
 const removeDesejo = async (request, response) => {
     const id = request.params.id
     const idDesejo = request.params.idDesejo
-    const kid = await kidsModel.findById(id)
-    const desejo = kid.desejos.find(desejo => idDesejo == desejo._id)
-    const desejoIndex = kid.desejos.indexOf(desejo)
-    kid.desejos.splice(desejoIndex, 1)
-    console.log(desejo) // ta dando undefined
-    kid.save((error, kid) => {
-        if (error) {
-            return response.status(500).send(error)
-        }
-        if (kid) {
-            return response.status(200).send('Desejo deletado!')
-        }
-        return response.status(404).send('Desejo não encontrado') //nao esta funcionando
-    })
+    const kid = await kidsModel.update({ _id: id },
+         {$pull: { desejos: { _id: idDesejo } } } ,
+        (error, kid) => {
+            if (error) {
+                return response.status(500).send(error)
+            }
+            if (kid) {
+                return response.status(200).send('Desejo deletado!')
+            }
+            return response.status(404).send('Desejo não encontrado')
+        })
 }
 
 //criar login
@@ -289,7 +286,13 @@ const login = async (request, response) => {
     if (kidEncontrada) {
         const senhaCorreta = bcrypt.compareSync(request.body.senha, kidEncontrada.senha)
         if (senhaCorreta) {
-            return response.status(200).send( 'Logado!')
+            console.log(SEGREDO)
+            const token = jwt.sign(
+                {}, //payload
+                SEGREDO,
+                { expiresIn: 6000 }
+            )
+            return response.status(200).send({ token })
         }
         return response.status(401).send('Senha incorreta.')
     }
