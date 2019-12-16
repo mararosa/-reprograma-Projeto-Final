@@ -102,6 +102,22 @@ const addCofrinhos = async (request, response) => {
     })
 }
 
+// ver todos os cofrinhos
+const getAllCofrinhos = async (request, response) => {
+    const id = request.params.id
+    await kidsModel.findById(id, (error, kid) => {
+      if (error) {
+        return response.status(500).send(error)
+      }
+  
+      if (kid) {
+        return response.status(200).send(kid.cofrinhos)
+      }
+  
+      return response.status(404).send('Usuário não encontrado.')
+    })
+  }
+
 // Atualiza o cofrinho, adiciona valores no cofrinho. preciso pedir a id do cofrinho
 const updateCofrinhoEntradas = async (request, response) => {
     const id = request.params.id
@@ -186,6 +202,23 @@ const addDesejos = async (request, response) => {
     })
 }
 
+//Lista todos os desejos
+const getAllDesejos = async (request, response) => {
+    const id = request.params.id
+    await kidsModel.findById(id, (error, kid) => {
+      if (error) {
+        return response.status(500).send(error)
+      }
+  
+      if (kid) {
+        return response.status(200).send(kid.desejos)
+      }
+  
+      return response.status(404).send('Usuário não encontrado.')
+    })
+  }
+
+// 
 const calculaValorDesejo = async (request, response) => {
     const id = request.params.id
     const idDesejo = request.params.idDesejo
@@ -228,11 +261,13 @@ module.exports = {
     update,
     remove,
     addCofrinhos,
+    getAllCofrinhos,
     updateCofrinhoEntradas,
     updateCofrinhoSaidas,
     getCofrinhoById,
     removeCofrinho,
     addDesejos,
+    getAllDesejos,
     calculaValorDesejo,
     // getDesejo,
 }
