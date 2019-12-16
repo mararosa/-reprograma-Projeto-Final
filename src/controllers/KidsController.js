@@ -2,6 +2,8 @@ const { connect } = require('../models/dataBase')
 const kidsModel = require('../models/KidsSchema')
 const { cofrinhosModel } = require('../models/CofrinhosSchema')
 const { desejosModel } = require('../models/DesejosSchema')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 connect()
 //funcção para calcular o valor do desejo/dias
@@ -29,6 +31,11 @@ const getAll = (request, response) => {
 
 //adicionar uma criança/perfil
 const add = (request, response) => {
+    if (!request.body.senha) {
+        return response.status(400).send('Digite sua senha!')
+    }
+    const senhaCriptografada = bcrypt.hashSync(request.body.senha)
+    request.body.senha = senhaCriptografada
     const novaKid = new kidsModel(request.body)
     novaKid.save((error) => {
         if (error) {
