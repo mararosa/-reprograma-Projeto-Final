@@ -185,7 +185,6 @@ const removeCofrinho = async (request, response) => {
             if (kid) {
                 return response.status(200).send('Cofrinho deletado!')
             }
-            return response.status(404).send('Cofrinho não encontrado')
         })
 }
 
@@ -272,7 +271,6 @@ const removeDesejo = async (request, response) => {
             if (kid) {
                 return response.status(200).send('Desejo deletado!')
             }
-            return response.status(404).send('Desejo não encontrado')
         })
 }
 
