@@ -176,21 +176,17 @@ const getCofrinhoById = async (request, response) => {
 const removeCofrinho = async (request, response) => {
     const id = request.params.id
     const idCofrinho = request.params.idCofrinho
-    const kid = await kidsModel.findById(id)
-    const cofrinho = kid.cofrinhos.find(cofrinho => idCofrinho == cofrinho._id)
-    const cofrinhoIndex = kid.cofrinhos.indexOf(cofrinho)
-    console.log(cofrinho) // ta dando undefined
-    console.log(kid)
-    kid.cofrinhos.splice(cofrinhoIndex, 1)
-    kid.save((error, kid) => {
-        if (error) {
-            return response.status(500).send(error)
-        }
-        if (kid) {
-            return response.status(200).send('Cofrinho deletado!')
-        }
-        return response.status(404).send('Cofrinho não encontrado') //nao esta funcionando
-    })
+    const kid = await kidsModel.update({ _id: id },
+        { $pull: { cofrinhos: { _id: idCofrinho } } },
+        (error, kid) => {
+            if (error) {
+                return response.status(500).send(error)
+            }
+            if (kid) {
+                return response.status(200).send('Cofrinho deletado!')
+            }
+            return response.status(404).send('Cofrinho não encontrado')
+        })
 }
 
 // cria um desejo/objetivo
@@ -268,7 +264,7 @@ const removeDesejo = async (request, response) => {
     const id = request.params.id
     const idDesejo = request.params.idDesejo
     const kid = await kidsModel.update({ _id: id },
-         {$pull: { desejos: { _id: idDesejo } } } ,
+        { $pull: { desejos: { _id: idDesejo } } },
         (error, kid) => {
             if (error) {
                 return response.status(500).send(error)
