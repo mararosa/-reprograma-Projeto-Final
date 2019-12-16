@@ -280,7 +280,6 @@ const login = async (request, response) => {
     if (kidEncontrada) {
         const senhaCorreta = bcrypt.compareSync(request.body.senha, kidEncontrada.senha)
         if (senhaCorreta) {
-            console.log(SEGREDO)
             const token = jwt.sign(
                 {}, //payload
                 SEGREDO,
