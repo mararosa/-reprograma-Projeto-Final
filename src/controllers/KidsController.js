@@ -1,4 +1,3 @@
-require('dotenv').load
 const { connect } = require('../models/dataBase')
 const kidsModel = require('../models/KidsSchema')
 const { cofrinhosModel } = require('../models/CofrinhosSchema')

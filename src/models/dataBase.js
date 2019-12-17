@@ -1,7 +1,7 @@
-require('dotenv-safe').config()
 const mongoose = require("mongoose")
 const DB_URL = process.env.MONGODB_URI
 
+process.env.PORT
 
 const connect = () => {
     mongoose.connect(DB_URL, {
