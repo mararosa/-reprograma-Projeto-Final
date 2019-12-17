@@ -42,9 +42,10 @@ const update = (request, response) => {
 
 ## Instalação
 
-Dependências necessárias para rodaR o código. Exemplo:
+Dependências necessárias para rodar o código. 
 
 ```
+exemplo: 
 npm install express
 ```
 
