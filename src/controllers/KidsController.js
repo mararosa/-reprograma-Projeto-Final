@@ -240,7 +240,7 @@ const calculaValorDesejo = async (request, response) => {
         if (error) {
             return response.status(500).send(error)
         }
-        return response.status(200).send('Você precisará poupar: ' + valorDias + ' por dia :) ')
+        return response.status(200).send('Você precisará poupar: ' + valorDias + ' por dia :)  \n*** O valor foi alterado para: ' + valor + ' ***' )
     })
 }
 
