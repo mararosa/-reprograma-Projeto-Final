@@ -54,6 +54,11 @@ npm install express
 * mongodb
 * mongoose
 
+## Estrutura do projeto
+
+* Node.js
+* MongoDb
+* Heroku
 
 
 
