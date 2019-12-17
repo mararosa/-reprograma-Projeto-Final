@@ -228,14 +228,11 @@ const calculaValorDesejo = async (request, response) => {
     const idDesejo = request.params.idDesejo
     const valor = request.body.valor
     const kid = await kidsModel.findById(id)
-    console.log(kid)
     const desejo = kid.desejos.find((desejo) => idDesejo == desejo._id)
-    console.log(desejo)
     const dataGerada = desejo.data,
         dataDesejo = desejo.data_conquistar,
         valorDias = diffDias(dataGerada, dataDesejo, valor);
     desejo.valor = valor
-    console.log(valorDias)
     kid.save((error) => {
         if (error) {
             return response.status(500).send(error)

@@ -26,7 +26,7 @@ const autenticar = (request, response, next) => {
 }
 
 router.get('', controller.getAll) //vou tirar depois 
-router.post('', controller.add) // adiciona kid
+router.post('', controller.add) // adiciona kid 
 router.get('/:id', autenticar, controller.getById) //lista perfil
 router.patch('/:id', autenticar, controller.update) // atualiza perfil
 router.delete('/:id', autenticar, controller.remove) // remove perfil 
