@@ -12,7 +12,11 @@ Meu projeto foi criado para incentivar a educação financeira para crianças e 
 * Para acessar os end points autenticados, o usuário precisará fazer login para gerar um token válido.
 
 ```
+arquivo route: 
+
 router.patch('/:id', autenticar, controller.update) // atualiza perfil
+
+arquivo controller: 
 
 //kid atualizar seu perfil
 const update = (request, response) => {
