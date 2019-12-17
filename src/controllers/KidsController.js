@@ -225,21 +225,33 @@ const getAllDesejos = async (request, response) => {
 const calculaValorDesejo = async (request, response) => {
     const id = request.params.id
     const idDesejo = request.params.idDesejo
-    const valor = request.body.valor
     const kid = await kidsModel.findById(id)
     const desejo = kid.desejos.find((desejo) => idDesejo == desejo._id)
     const dataGerada = desejo.data,
         dataDesejo = desejo.data_conquistar,
+        valor = desejo.valor,
         valorDias = diffDias(dataGerada, dataDesejo, valor);
-    desejo.valor = valor
+    if (desejo) {
+        return response.status(200).send('Você precisará poupar: ' + valorDias + ' por dia :)')
+    }
+    return response.status(404).send('Desejo não encontrado')
+}
+
+//atualiza desejo by id
+const updateDesejo = async (request, response) => {
+    const id = request.params.id
+    const idDesejo = request.params.idDesejo
+    const novaData = request.body.data_conquistar
+    const kid = await kidsModel.findById(id)
+    const desejo = kid.desejos.find((desejo) => idDesejo == desejo._id)
+    desejo.data_conquistar = novaData
     kid.save((error) => {
         if (error) {
             return response.status(500).send(error)
         }
-        return response.status(200).send('Você precisará poupar: ' + valorDias + ' por dia :)  \n*** O valor foi alterado para: ' + valor + ' ***' )
+        return response.status(200).send(kid.desejos)
     })
 }
-
 
 // Lista desejo pela id
 const getDesejoById = async (request, response) => {
@@ -305,6 +317,7 @@ module.exports = {
     addDesejos,
     getAllDesejos,
     calculaValorDesejo,
+    updateDesejo,
     getDesejoById,
     removeDesejo,
     login

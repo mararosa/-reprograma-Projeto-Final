@@ -37,9 +37,12 @@ router.get('/:id/cofrinhos/:idCofrinho', autenticar, controller.getCofrinhoById)
 router.delete('/:id/cofrinhos/:idCofrinho', autenticar, controller.removeCofrinho) // remove cofrinho 
 router.post('/:id/desejos', autenticar, controller.addDesejos) // cria um desejo
 router.get('/:id/desejos', autenticar, controller.getAllDesejos) // lista todos os desejos
-router.patch('/:id/desejos/:idDesejo/calcular', autenticar, controller.calculaValorDesejo) // calcula valor do desejo 
+router.get('/:id/desejos/:idDesejo/calcular', autenticar, controller.calculaValorDesejo) // calcula valor do desejo
+router.patch('/:id/desejos/:idDesejo', autenticar, controller.updateDesejo) // atualiza desejo 
 router.get('/:id/desejos/:idDesejo', autenticar, controller.getDesejoById) // lista desejo
 router.delete('/:id/desejos/:idDesejo', autenticar, controller.removeDesejo) // remove desejo
 router.post('/login', controller.login) //add login
+
+ 
 
 module.exports = router
