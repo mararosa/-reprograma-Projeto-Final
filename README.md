@@ -6,7 +6,7 @@ Projeto Livre - API construída com CRUD ​(create-read-update-delete)
 
 Meu projeto foi criado para incentivar a educação financeira para crianças e adolescentes.
 
-* Usuário poderá cadastrar seu perfil atualizar, deletar e listar seu perfil;
+* Usuário poderá cadastrar, atualizar, deletar e listar seu perfil;
 * Usuário poderá cadastrar um cofrinho, atualizar os valores com entradas e saídas, remover e listar todos os cofrinhos ou por id;
 * Usuário poderá cadastrar um desejo, atualizar o a data do desejo, calcular o valor, remover e listar todos os desejos ou por id;
 * Para acessar os end points autenticados, o usuário precisará fazer login para gerar um token válido.
