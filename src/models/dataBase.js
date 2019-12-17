@@ -1,11 +1,11 @@
+require('dotenv').load
 const mongoose = require("mongoose")
-const DB_URL = "mongodb://localhost:27017/reprogramaProjetoFinal"
-
+const DB_URL = process.env.DB_URI
 const connect = () => {
-    mongoose.connect(DB_URL, { 
+    mongoose.connect(DB_URL, {
         useUnifiedTopology: true,
         useCreateIndex: true,
-        useNewUrlParser: true 
+        useNewUrlParser: true
     })
     const connection = mongoose.connection
     connection.on('error', () => console.error('Erro ao conectar'))
