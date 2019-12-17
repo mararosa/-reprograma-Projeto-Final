@@ -44,11 +44,6 @@ const update = (request, response) => {
 
 Dependências necessárias para rodar o código. 
 
-```
-exemplo: 
-npm install express
-```
-
 * bcryptjs
 * body-parser
 * cors
@@ -58,6 +53,12 @@ npm install express
 * jsonwebtoken
 * mongodb
 * mongoose
+
+```
+exemplo: 
+
+npm install express
+```
 
 ## Estrutura do projeto
 
