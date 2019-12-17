@@ -1,5 +1,4 @@
 const express = require("express")
-require('dotenv-safe').config()
 const router = express.Router()
 
 router.get("/", function(req, res) {
