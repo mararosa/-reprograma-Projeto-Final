@@ -4,7 +4,6 @@ const router = express.Router();
 const controller = require("../controllers/KidsController")
 const jwt = require('jsonwebtoken')
 const SEGREDO = process.env.SEGREDO
-const dotenv = require('dotenv').config() // chamando odependencia do dotenv
 const autenticar = (request, response, next) => {
     const authHeader = request.get('authorization')
     let autenticado = false
