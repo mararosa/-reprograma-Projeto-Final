@@ -2,7 +2,7 @@
 
 Projeto Livre - API construída com CRUD ​(create-read-update-delete)
 
-## Projeto Cofrinho
+## Projeto Cofrinho Digital
 
 Meu projeto foi criado para incentivar a educação financeira para crianças e adolescentes.
 
