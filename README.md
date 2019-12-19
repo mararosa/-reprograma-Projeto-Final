@@ -4,7 +4,7 @@ Projeto Livre - API construída com CRUD ​(create-read-update-delete)
 
 ## Projeto Cofrinho Digital
 
-Meu projeto foi criado para incentivar a educação financeira para crianças e adolescentes.
+Minha API foi criada com intuito de incentivar a educação financeira para crianças e adolescentes.
 
 * Usuário poderá cadastrar, atualizar, deletar e listar seu perfil;
 * Usuário poderá cadastrar um cofrinho, atualizar os valores com entradas e saídas, remover e listar todos os cofrinhos ou por id;
